@@ -1,15 +1,13 @@
 # Onyx ERP integration Magento 2 module
 
-### Requirements:
+### Requirements
 
-- Magento 2.0.0 Stable or higher
+- Magento 2.2.0 Stable or higher
 - Enable Single store mode from Magento admin panel
 
 ### Setup
 
-Use composer to install this extension. First make sure that Magento is installed via composer, and that there is a valid `composer.json` file present.
-
-Next, install our module using the following command:
+Use composer to install this extension, install our module using the following command:
 
     composer require ultimate-sa/onyx-magento
 
@@ -23,8 +21,8 @@ Configuration > Advanced > Advanced**.
 
 > Make sure that you have installed Magento cron jobs by this command `php bin/magento cron:install` if not so please run this command as it's critical for synchronization.
 
-## Overview
+### Overview
 
 This module syncs your Magento store with Onyx ERP, modules like Categories, Products and Orders are being synced typically every one hour.
 
-## Usage
+### Usage
