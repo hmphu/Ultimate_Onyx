@@ -1,0 +1,110 @@
+<form class="form" action="result" method="post">
+
+    <fieldset class="fieldset">
+        <legend class="legend">
+            <span><strong>Sync Settings</strong></span>
+        </legend>
+        <br>
+        <div class="field required">
+            <label for="api-url" class="label">
+                <span>API Url</span>
+            </label>
+            <div class="control">
+                <input type="text" id="api-url" name="api-url" class="input-text">
+            </div>
+        </div>
+        <div class="field required">
+            <label for="api-key" class="label">
+                <span>API key</span>
+            </label>
+            <div class="control">
+                <input type="text" id="api-key" name="api-key" class="input-text">
+            </div>
+        </div>
+        <div class="field required">
+            <label for="api-token" class="label">
+                <span>API Token</span>
+            </label>
+            <div class="control">
+                <input type="text" id="api-token" name="api-token" class="input-text">
+            </div>
+        </div>
+    </fieldset>
+
+    <br>
+    <div class="actions-toolbar">
+        <div class="primary">
+            <button type="submit" class="action submit primary" title="Save">
+                <span>Save</span>
+            </button>
+        </div>
+    </div>
+
+</form>
+<br><br><br>
+<form class="form" action="result" method="post">
+
+    <fieldset class="fieldset">
+        <legend class="legend">
+            <span><strong>Sync Modules</strong></span>
+        </legend>
+        <br>
+
+        <div class="field">
+            <input type="checkbox" id="modules" name="modules[]" value="users">
+            <label for="modules" class="label">
+                <span>Users</span>
+            </label>
+        </div>
+
+        <div class="field">
+            <input type="checkbox" id="modules" name="modules[]" value="categories">
+            <label for="modules" class="label">
+                <span>Categories</span>
+            </label>
+        </div>
+
+        <div class="field">
+            <input type="checkbox" id="modules" name="modules[]" value="products">
+            <label for="modules" class="label">
+                <span>Products</span>
+            </label>
+        </div>
+
+        <div class="field">
+            <input type="checkbox" id="modules" name="modules[]" value="pending-orders">
+            <label for="modules" class="label">
+                <span>Pending ERP Posting Orders</span>
+            </label>
+        </div>
+
+        <div class="field">
+            <input type="checkbox" id="modules" name="modules[]" value="orders">
+            <label for="modules" class="label">
+                <span>Orders</span>
+            </label>
+        </div>
+
+    </fieldset>
+
+    <br>
+    <div class="actions-toolbar">
+        <div class="primary">
+            <button type="submit" class="action submit primary" title="Save">
+                <span>Save</span>
+            </button>
+        </div>
+    </div>
+
+</form>
+<br><br><br>
+<form class="form" action="result" method="post">
+    <div class="actions-toolbar">
+        <div class="primary">
+            <button type="submit" class="action submit primary" title="Save">
+                <span>Sync now</span>
+            </button>
+        </div>
+    </div>
+</form>
+<p><i>Use this option to sync all selected modules instantly.</i></p>

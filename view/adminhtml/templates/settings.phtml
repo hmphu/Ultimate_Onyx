@@ -1,0 +1,112 @@
+<?php
+/**
+ * @var Ultimate/Onyx/Block/Settings $block
+ */
+ ?>
+
+
+<form class="form" action="<?php echo $block->getFormAction() ?>" method="POST" onsubmit="return confirm('Are you sure to update Onyx ERP settings?');">
+
+    <fieldset class="fieldset">
+        <legend class="legend">
+            <span><strong>API Settings</strong></span>
+        </legend>
+        <br>
+        <div class="field required">
+            <label for="api-url" class="label">
+                <span>API Url</span>
+            </label>
+            <div class="control">
+                <input type="text" id="api-url" name="api-url" class="input-text" value="http://10.0.95.95/OnyxShopMarket/Service.svc/" required>
+            </div>
+        </div>
+        <div class="field required">
+            <label for="api-key" class="label">
+                <span>API key</span>
+            </label>
+            <div class="control">
+                <input type="text" id="api-key" name="api-key" class="input-text">
+            </div>
+        </div>
+        <div class="field required">
+            <label for="api-token" class="label">
+                <span>API Token</span>
+            </label>
+            <div class="control">
+                <input type="text" id="api-token" name="api-token" class="input-text">
+            </div>
+        </div>
+        <div class="field required">
+            <label for="accounting-year" class="label">
+                <span>Accounting Year</span>
+            </label>
+            <div class="control">
+                <input type="number" id="accounting-year" name="accounting-year" class="input-text" min="1900" value="2016">
+            </div>
+        </div>
+        <div class="field required">
+            <label for="activity-number" class="label">
+                <span>Activity Number</span>
+            </label>
+            <div class="control">
+                <input type="number" id="activity-number" name="activity-number" class="input-text" min="0" value="70">
+            </div>
+        </div>
+        <div class="field required">
+            <label for="images-base-url" class="label">
+                <span>Images Base Url</span>
+            </label>
+            <div class="control">
+                <input type="text" id="images-base-url" name="images-base-url" class="input-text">
+            </div>
+        </div>
+        <!-- <div class="field required">
+            <label for="qty" class="label">
+                <span>Product Quantity</span>
+            </label>
+            <br>
+            <input type="radio" class="input-radio" name="qty" id="qty" value="checkedValue" checked>
+            Available Quantity
+            <input type="radio" class="input-radio" name="qty" id="qty" value="checkedValue">
+            Available With Reserved
+
+        </div> -->
+        <input name="form_key" type="hidden" value="<?php echo $block->getFormKey() ?>" />
+
+        <br>
+        <div class="actions-toolbar">
+            <div class="primary">
+                <button type="submit" class="action submit primary" title="Save">
+                    <span>Save</span>
+                </button>
+            </div>
+        </div>
+    </fieldset>
+
+</form>
+<br>
+<form class="form" action="<?php echo $block->getFormAction() ?>" method="POST" onsubmit="return confirm('Are you sure to start sync process now?');">
+    <input type="hidden" name="now" value="true">
+    <input name="form_key" type="hidden" value="<?php echo $block->getFormKey() ?>" />
+    <div class="actions-toolbar">
+        <div class="primary">
+            <button type="submit" class="action submit primary" title="Save">
+                <span>Sync now</span>
+            </button>
+        </div>
+    </div>
+</form>
+<p><i>Sync all modules instantly.</i></p>
+
+<form class="form" action="<?php echo $block->getFormAction() ?>" method="POST" onsubmit="return confirm('Are you sure to revert all products and categories?');">
+    <input type="hidden" name="revert" value="true">
+    <input name="form_key" type="hidden" value="<?php echo $block->getFormKey() ?>" />
+    <div class="actions-toolbar">
+        <div class="primary">
+            <button type="submit" class="action submit secondary" title="Save">
+                <span>Revert</span>
+            </button>
+        </div>
+    </div>
+</form>
+<p><i>Revert all changes.</i></p>

@@ -1,0 +1,31 @@
+{
+    "name": "ultimate/onyx",
+    "type": "magento2-module",
+    "description": "A Magento 2 module that integrate Onyx ERP system",
+    "version": "1.0.0",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "authors": [{
+        "name": "Yamen Ashraf",
+        "email": "yamen.a.abdulrahman@hotmail.com",
+        "homepage": "https://github.com/yamenarahman"
+    }],
+    "require": {
+        "php": "~7.0.0",
+        "magento/framework": "~100.0.4",
+        "guzzlehttp/guzzle": "~6.0",
+        "tightenco/collect": "~5.6",
+        "mageplaza/magento-2-arabic-language-pack": "dev-master",
+        "stichoza/google-translate-php": "~3.2"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Ultimate\\Onyx\\": ""
+        }
+    }
+}

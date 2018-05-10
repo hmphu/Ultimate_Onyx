@@ -1,0 +1,10 @@
+<h3>Log</h3>
+<p><?php
+
+    exec('tail -n +1 var/log/onyx.log', $error_logs);
+
+    foreach ($error_logs as $error_log) {
+        echo "<br />" . $error_log;
+    }
+
+    ?></p>
