@@ -35,8 +35,7 @@ class Settings extends Action
 
     public function execute()
     {
-        echo json_encode($this->getStoreOrders());
-        exit;
+        return $this->postOrder();
         // return $this->getOnyxProducts();
         // echo json_encode($this->getStoreProducts()->getData());
         // return $this->getOnyxCategories();

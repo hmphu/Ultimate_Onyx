@@ -2,7 +2,7 @@
 <config
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
-        <add id="Ultimate_Onyx::onyx" title="Onyx ERP" translate="title" module="Ultimate_Onyx" parent="Magento_Backend::content" sortOrder="50" dependsOnModule="Ultimate_Onyx" resource="Ultimate_Onyx::onyx"/>
+        <add id="Ultimate_Onyx::onyx" title="Onyx ERP" translate="title" module="Ultimate_Onyx" parent="Magento_Backend::system" sortOrder="50" dependsOnModule="Ultimate_Onyx" resource="Ultimate_Onyx::onyx"/>
         <add id="Ultimate_Onyx::onyx_config" title="API Settings" translate="title" module="Ultimate_Onyx" parent="Ultimate_Onyx::onyx" sortOrder="10" dependsOnModule="Ultimate_Onyx" action="onyx/api/settings" resource="Ultimate_Onyx::onyx"/>
         <add id="Ultimate_Onyx::onyx_sync" title="Sync Settings" translate="title" module="Ultimate_Onyx" parent="Ultimate_Onyx::onyx" sortOrder="10" dependsOnModule="Ultimate_Onyx" action="onyx/api/sync" resource="Ultimate_Onyx::onyx"/>
         <add id="Ultimate_Onyx::onyx_log" title="Sync Log" translate="title" module="Ultimate_Onyx" parent="Ultimate_Onyx::onyx" sortOrder="10" dependsOnModule="Ultimate_Onyx" action="onyx/api/log" resource="Ultimate_Onyx::onyx"/>

@@ -28,7 +28,7 @@ class NewOrderObserver implements ObserverInterface
 
         $this->postOrder($order);
 
-        $this->logger->info('Order Found -> NewOrderObserver');
+        $this->logger->info('New order is created.');
         // if ($customerId)
             #do something with order an customer
     }
