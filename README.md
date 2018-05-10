@@ -1,5 +1,9 @@
 # Onyx ERP integration Magento 2 module
 
+[![Latest Stable Version](https://poser.pugx.org/ultimate-sa/onyx-magento2/v/stable)](https://packagist.org/packages/ultimate-sa/onyx-magento2)
+[![License](https://poser.pugx.org/ultimate-sa/onyx-magento2/license)](https://packagist.org/packages/ultimate-sa/onyx-magento2)
+[![Total Downloads](https://poser.pugx.org/ultimate-sa/onyx-magento2/downloads)](https://packagist.org/packages/ultimate-sa/onyx-magento2)
+
 ### Requirements
 
 - Magento 2.2.0 Stable or higher
