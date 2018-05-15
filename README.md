@@ -13,7 +13,7 @@
 
 Use composer to install this extension, install our module using the following command:
 
-    composer require ultimate-sa/onyx-magento
+    composer require ultimate-sa/onyx-magento2
 
 Next, install the new module into Magento itself by running this command in Magento base directory:
 
