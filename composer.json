@@ -12,12 +12,12 @@
         "homepage": "https://github.com/yamenarahman"
     }],
     "require": {
-        "php": "~7.0.0|~7.1.0",
-        "magento/framework": "~100.2.0",
+        "php": ">=7.0.0",
+        "magento/framework": "~100.2.*",
         "guzzlehttp/guzzle": "~6.0",
         "mageplaza/magento-2-arabic-language-pack": "dev-master",
         "stichoza/google-translate-php": "~3.2",
-        "vlucas/phpdotenv": "~2.4.0"
+        "vlucas/phpdotenv": "~2.4.*"
     },
     "autoload": {
         "files": [
