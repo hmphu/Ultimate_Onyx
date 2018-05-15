@@ -12,17 +12,18 @@ trait OrdersTrait
 {
     public function getStoreOrders()
     {
-        $orders = ObjectManager::getInstance()
-                                ->get('Magento\Sales\Model\OrderFactory')
-                                ->create()
-                                ->getCollection()
-                                ->addFieldToSelect(['*']); //->getData();
+        $orders = ObjectManager::getInstance()->get('Magento\Sales\Model\OrderFactory')
+                                              ->create()
+                                              ->getCollection()
+                                              ->addFieldToSelect(['*']); //->getData();
 
-        return $orders->getData();
+        return $orders->getFirstItem()->getAllItems();
     }
 
     public function postOrder() //($order)
     {
+        // set if customer exits
+
         $onyxClient = new Client([
             // 'base_uri' => 'http://196.218.192.248:2000/OnyxShopMarket/Service.svc/'
             'base_uri' => 'http://10.0.95.95/OnyxShopMarket/Service.svc/'
@@ -39,7 +40,7 @@ trait OrdersTrait
                     'value' => [
                         'OrderNo'         => -1,
                         'OrderSer'        => -1,
-                        'Code'            => '123-456',// $order->getId() . '-' . $order->getCustomerId(),
+                        'Code'            => '', // $order->getId() . '-' . $order->getCustomerId(),
                         'Name'            => 'customer-123', // $order->getCustomerName(),
                         'CustomerType'    => 4, // Credit payment
                         'FiscalYear'      => data('Y'), // date
@@ -50,14 +51,14 @@ trait OrdersTrait
                         'TotalDiscount'   => 5,
                         'TotalTax'        => 5,
                         'ChargeAmt'       => 5,
-                        'CustomerAddress' => 'customer-123-address',// $order->getShippingAddress(),
+                        'CustomerAddress' => 'customer-123-address', // $order->getShippingAddress(),
                         'Mobile'          => '0123456789',
                         'Latitude'        => '',
-                        'Longitude'        => '',
+                        'Longitude'       => '',
                         'FileExtension'   => '',
                         'ImageValue'      => '',
                         'P_AD_TRMNL_NM'   => 0,
-                        'OrderDetailsList' => $this->getOrderedItems()
+                        'OrderDetailsList' => $this->getOrderedItems($order)
                     ]
                 ]
             ]
@@ -66,10 +67,12 @@ trait OrdersTrait
         echo json_encode($response->getBody());
     }
 
-    public function getOrderedItems()
+    public function getOrderedItems($order)
     {
-        return [
-            [
+        $orderdItems = [];
+
+        foreach ($order->getOrderedItems() as $item) {
+            $orderdItems [] = [
                 'Code'               => '451003',
                 'Unit'               => 'كرتون',
                 'Quantity'           => 1,
@@ -79,7 +82,9 @@ trait OrdersTrait
                 'TaxRate'            => 0,
                 'TaxAmount'          => 0,
                 'ChargeAmt'          => 0
-            ]
-        ];
+            ];
+        }
+
+        return $orderdItems;
     }
 }
