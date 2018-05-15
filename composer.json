@@ -13,11 +13,11 @@
     }],
     "require": {
         "php": ">=7.0.0",
-        "magento/framework": "~100.2.*",
+        "magento/framework": "~100.2.0",
         "guzzlehttp/guzzle": "~6.0",
         "mageplaza/magento-2-arabic-language-pack": "dev-master",
         "stichoza/google-translate-php": "~3.2",
-        "vlucas/phpdotenv": "~2.4.*"
+        "vlucas/phpdotenv": "~2.4.0"
     },
     "autoload": {
         "files": [
