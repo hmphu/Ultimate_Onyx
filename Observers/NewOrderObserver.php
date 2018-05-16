@@ -6,11 +6,12 @@ use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Ultimate\Onyx\Api\OrdersTrait;
+use Ultimate\Onyx\Api\SettingsTrait;
 use Ultimate\Onyx\Log\Logger;
 
 class NewOrderObserver implements ObserverInterface
 {
-    use OrdersTrait;
+    use SettingsTrait, OrdersTrait;
 
     protected $connector;
     protected $logger;
@@ -18,22 +19,18 @@ class NewOrderObserver implements ObserverInterface
     public function __construct(Logger $logger)
     {
         $objectManager = ObjectManager::getInstance();
+
         $this->logger = $logger;
+        $this->loadSettings();
     }
 
     public function execute(Observer $observer)
     {
         $order = $observer->getEvent()->getOrder();
-        $customerId = $order->getCustomerId();
 
-        $this->postOrder($order);
+        $this->sendOrder($order, $this->logger);
 
-        $this->logger->info('New order is created.');
         // if ($customerId)
             #do something with order an customer
-    }
-
-    public function sendOrder()
-    {
     }
 }

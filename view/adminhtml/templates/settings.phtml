@@ -12,81 +12,98 @@
             <span><strong>API Settings</strong></span>
         </legend>
         <br>
+        <br>
         <div class="field required">
-            <label for="api-url" class="label">
+            <label for="api_url" class="label">
                 <span>API Url</span>
             </label>
             <div class="control">
-                <input type="text" id="api-url" name="api-url" class="input-text" value="http://10.0.95.95/OnyxShopMarket/Service.svc/" required>
+                <input type="text" id="api_url" name="api_url" class="input-text" value="<?php echo getenv('API_URL') ?>" required>
             </div>
         </div>
+        <br>
         <div class="field required">
-            <label for="api-key" class="label">
-                <span>API key</span>
+            <label for="access_key" class="label">
+                <span>Access key</span>
             </label>
             <div class="control">
-                <input type="text" id="api-key" name="api-key" class="input-text">
+                <input type="text" id="access_key" name="access_key" class="input-text">
             </div>
         </div>
+        <br>
         <div class="field required">
-            <label for="api-token" class="label">
-                <span>API Token</span>
+            <label for="access_token" class="label">
+                <span>Access Token</span>
             </label>
             <div class="control">
-                <input type="text" id="api-token" name="api-token" class="input-text">
+                <input type="text" id="access_token" name="access_token" class="input-text">
             </div>
         </div>
+        <br>
         <div class="field required">
-            <label for="accounting-year" class="label">
+            <label for="language_id" class="label">
+                <span>Language ID</span>
+            </label>
+            <div class="control">
+                <input type="text" id="language_id" name="language_id" class="input-text" value="<?php echo getenv('LANGUAGE_ID') ?>">
+            </div>
+        </div>
+        <br>
+        <div class="field required">
+            <label for="accounting_year" class="label">
                 <span>Accounting Year</span>
             </label>
             <div class="control">
-                <input type="number" id="accounting-year" name="accounting-year" class="input-text" min="1900" value="2016">
+                <input type="number" id="accounting_year" name="accounting_year" class="input-text" min="1900" value="<?php echo getenv('ACCOUNTING_YEAR') ?>">
             </div>
         </div>
+        <br>
         <div class="field required">
-            <label for="activity-number" class="label">
+            <label for="activity_number" class="label">
                 <span>Activity Number</span>
             </label>
             <div class="control">
-                <input type="number" id="activity-number" name="activity-number" class="input-text" min="0" value="70">
+                <input type="number" id="activity_number" name="activity_number" class="input-text" min="0" value="<?php echo getenv('ACTIVITY_NUMBER') ?>">
             </div>
         </div>
+        <br>
         <div class="field required">
-            <label for="branch-number" class="label">
+            <label for="branch_number" class="label">
                 <span>Branch Number</span>
             </label>
             <div class="control">
-                <input type="number" id="branch-number" name="branch-number" class="input-text" min="0" value="1">
+                <input type="number" id="branch_number" name="branch_number" class="input-text" min="0" value="<?php echo getenv('BRANCH_NUMBER') ?>">
             </div>
         </div>
+        <br>
         <div class="field required">
-            <label for="warehouse-code" class="label">
+            <label for="warehouse_code" class="label">
                 <span>Warehouse Code</span>
             </label>
             <div class="control">
-                <input type="number" id="warehouse-code" name="warehouse-code" class="input-text" min="0" value="101">
+                <input type="number" id="warehouse_code" name="warehouse_code" class="input-text" min="0" value="<?php echo getenv('WAREHOUSE_CODE') ?>">
             </div>
         </div>
+        <br>
         <div class="field required">
-            <label for="images-base-url" class="label">
+            <label for="images_url" class="label">
                 <span>Images Base Url</span>
             </label>
             <div class="control">
-                <input type="text" id="images-base-url" name="images-base-url" class="input-text">
+                <input type="text" id="images_url" name="images_url" class="input-text" value="<?php echo getenv('IMAGES_URL') ?>">
             </div>
         </div>
-        <!-- <div class="field required">
+        <br>
+        <div class="field required">
             <label for="qty" class="label">
                 <span>Product Quantity</span>
             </label>
             <br>
-            <input type="radio" class="input-radio" name="qty" id="qty" value="checkedValue" checked>
+            <input type="radio" class="input-radio" name="qty" id="qty" value="0" checked>
             Available Quantity
-            <input type="radio" class="input-radio" name="qty" id="qty" value="checkedValue">
+            <input type="radio" class="input-radio" name="qty" id="qty" value="1">
             Available With Reserved
-
-        </div> -->
+        </div>
         <input name="form_key" type="hidden" value="<?php echo $block->getFormKey() ?>" />
 
         <br>

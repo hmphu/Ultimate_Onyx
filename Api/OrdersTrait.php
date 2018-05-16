@@ -17,70 +17,81 @@ trait OrdersTrait
                                               ->getCollection()
                                               ->addFieldToSelect(['*']); //->getData();
 
-        return $orders->getFirstItem()->getAllItems();
+        // return $orders;
+        return $orders->getFirstItem()->getShippingAddress()->getData();
     }
 
-    public function postOrder() //($order)
+    public function sendOrder($order, $logger)
     {
         // set if customer exits
-
         $onyxClient = new Client([
             // 'base_uri' => 'http://196.218.192.248:2000/OnyxShopMarket/Service.svc/'
-            'base_uri' => 'http://10.0.95.95/OnyxShopMarket/Service.svc/'
+            'base_uri' => getenv('API_URL')
         ]);
 
-        $response = $onyxClient->request(
-            'POST',
-            'SaveOrder',
-            [
-                'json' => [
-                    'type' => 'ORACLE',
-                    'year' => 2016,
-                    'activityNumber' => 70,
-                    'value' => [
-                        'OrderNo'         => -1,
-                        'OrderSer'        => -1,
-                        'Code'            => '', // $order->getId() . '-' . $order->getCustomerId(),
-                        'Name'            => 'customer-123', // $order->getCustomerName(),
-                        'CustomerType'    => 4, // Credit payment
-                        'FiscalYear'      => data('Y'), // date
-                        'Activity'        => 70,
-                        'BranchNumber'    => 1,
-                        'WarehouseCode'   => 101,
-                        'TotalDemand'     => 100,
-                        'TotalDiscount'   => 5,
-                        'TotalTax'        => 5,
-                        'ChargeAmt'       => 5,
-                        'CustomerAddress' => 'customer-123-address', // $order->getShippingAddress(),
-                        'Mobile'          => '0123456789',
-                        'Latitude'        => '',
-                        'Longitude'       => '',
-                        'FileExtension'   => '',
-                        'ImageValue'      => '',
-                        'P_AD_TRMNL_NM'   => 0,
-                        'OrderDetailsList' => $this->getOrderedItems($order)
+        $address = $order->getShippingAddress()->getStreet()[0] . ', ' . $order->getShippingAddress()->getCity();
+
+        $name = $order->getBillingAddress()->getFirstName() . ' ' . $order->getBillingAddress()->getLastName();
+
+        try {
+            $response = $onyxClient->request(
+                'POST',
+                'SaveOrder',
+                [
+                    'json' => [
+                        'type' => 'ORACLE',
+                        'year' => getenv('ACCOUNTING_YEAR'),
+                        'activityNumber' => getenv('ACTIVITY_NUMBER'),
+                        'value' => [
+                            'OrderNo'         => -1,
+                            'OrderSer'        => -1,
+                            'Code'            => '', // $order->getId() . '-' . $order->getCustomerId(),
+                            'Name'            => 'me',// $name,
+                            'CustomerType'    => 4, // Credit payment
+                            'FiscalYear'      => date('Y'), // date
+                            'Activity'        => getenv('ACTIVITY_NUMBER'),
+                            'BranchNumber'    => getenv('BRANCH_NUMBER'),
+                            'WarehouseCode'   => getenv('WAREHOUSE_CODE'),
+                            'TotalDemand'     => $order->getBaseGrandTotal(),
+                            'TotalDiscount'   => $order->getDiscountAmount(),
+                            'TotalTax'        => $order->getTaxAmount(),
+                            'ChargeAmt'       => $order->getShippingAmount(),
+                            'CustomerAddress' => 'adsasd',// $address,
+                            'Mobile'          => $order->getBillingAddress()->getTelephone(),
+                            'Latitude'        => '',
+                            'Longitude'       => '',
+                            'FileExtension'   => '',
+                            'ImageValue'      => '',
+                            'P_AD_TRMNL_NM'   => 0,
+                            'OrderDetailsList' => $this->getOrderedItems($order->getItemsCollection())
+                        ]
                     ]
                 ]
-            ]
-        );
+            );
+        } catch (\Exception $e) {
+            $logger->error($e->getMessage());
+        }
 
-        echo json_encode($response->getBody());
+        $logger->info($response->getBody());
     }
 
-    public function getOrderedItems($order)
+    public function getOrderedItems($items)
     {
         $orderdItems = [];
 
-        foreach ($order->getOrderedItems() as $item) {
+        foreach ($items as $item) {
+            $code = explode('-', $item->getSku())[0];
+            $unit = explode('-', $item->getSku())[1];
+
             $orderdItems [] = [
-                'Code'               => '451003',
-                'Unit'               => 'كرتون',
-                'Quantity'           => 1,
-                'Price'              => 150,
-                'DiscountPercentage' => 0,
-                'DiscountValue'      => 0,
-                'TaxRate'            => 0,
-                'TaxAmount'          => 0,
+                'Code'               => $code,
+                'Unit'               => $unit,
+                'Quantity'           => $item->getQtyToShip(),
+                'Price'              => $item->getPrice(),
+                'DiscountPercentage' => $item->getDiscountPercent(),
+                'DiscountValue'      => $item->getDiscountAmount(),
+                'TaxRate'            => $item->getTaxPercent(),
+                'TaxAmount'          => $item->getTaxAmount(),
                 'ChargeAmt'          => 0
             ];
         }

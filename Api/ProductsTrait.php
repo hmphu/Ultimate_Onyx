@@ -7,7 +7,7 @@ use Magento\Framework\App\ObjectManager;
 use Stichoza\GoogleTranslate\TranslateClient;
 
 /**
- * Onyx-magento products management
+ * Onyx ERP products management
  */
 trait ProductsTrait
 {
@@ -16,7 +16,7 @@ trait ProductsTrait
         // validate last /
         $onyxClient = new Client([
             // 'base_uri' => 'http://196.218.192.248:2000/OnyxShopMarket/Service.svc/'
-            'base_uri' => 'http://10.0.95.95/OnyxShopMarket/Service.svc/'
+            'base_uri' => getenv('API_URL')
         ]);
 
         $response = $onyxClient->request(
@@ -25,9 +25,9 @@ trait ProductsTrait
             [
                 'query' => [
                     'type'               => 'ORACLE',
-                    'year'               => 2016,
-                    'activityNumber'     => 70,
-                    'languageID'         => 1,
+                    'year'               => getenv('ACCOUNTING_YEAR'),
+                    'activityNumber'     => getenv('ACTIVITY_NUMBER'),
+                    'languageID'         => getenv('LANGUAGE_ID'),
                     'groupCode'          => -1,
                     'mainGroupCode'      => -1,
                     'subGroupCode'       => -1,
@@ -86,12 +86,16 @@ trait ProductsTrait
                 $oldQty = ObjectManager::getInstance()->get('Magento\CatalogInventory\Api\StockStateInterface')
                                                       ->getStockQty($storeProduct->getId());
 
-                if ($oldPrice !== $product->Price || $oldQty !== $product->AvailableQuantity) {
+                $qtyToSync = getenv('QTY_WITH_RESERVED') == 0 ?
+                             $product->AvailableQuantity :
+                             $product->AvailableWithReservedQuantity;
+
+                if ($oldPrice !== $product->Price || $oldQty !== $qtyToSync) {
                     $storeProduct->setPrice($product->Price);
 
                     $storeProduct->setStockData([
-                        'is_in_stock' => $product->AvailableQuantity > 0 ? true : false, // qty with reserved ?
-                        'qty'         => $product->AvailableQuantity
+                        'is_in_stock' => $qtyToSync > 0 ? true : false, // qty with reserved ?
+                        'qty'         => $qtyToSync
                     ]);
 
                     try {

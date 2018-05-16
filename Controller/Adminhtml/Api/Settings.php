@@ -36,24 +36,19 @@ class Settings extends Action
 
     public function execute()
     {
-        $revert = $this->getRequest()->getParam('revert');
+        $this->loadSettings();
 
-        if ($revert) {
+        if ($this->getRequest()->getParam('revert')) {
             return $this->revert();
         }
 
-        $now = $this->getRequest()->getParam('now');
-
-        if ($now) {
+        if ($this->getRequest()->getParam('now')) {
             return $this->syncNow();
         }
 
-        $apiUrl = $this->getRequest()->getParam('api-url');
-
-        if ($apiUrl) {
-
-            // save settings
-            $this->messageManager->addSuccessMessage('Settings are saved successfully!');
+        if ($this->getRequest()->getParam('api_url')) {
+            $this->updateSettings($this->getRequest()->getParams());
+            $this->messageManager->addSuccessMessage('Onyx ERP Settings are saved successfully!');
 
             return $this->resultFactory->create(ResultFactory::TYPE_REDIRECT)
                                        ->setUrl('/admin/onyx/api/settings');

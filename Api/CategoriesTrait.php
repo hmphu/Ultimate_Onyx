@@ -6,7 +6,7 @@ use GuzzleHttp\Client;
 use Magento\Framework\App\ObjectManager;
 
 /**
- * Onyx-magento categories management
+ * Onyx ERP categories management
  */
 trait CategoriesTrait
 {
@@ -14,7 +14,7 @@ trait CategoriesTrait
     {
         $onyxClient = new Client([
             // 'base_uri' => 'http://196.218.192.248:2000/OnyxShopMarket/Service.svc/'
-            'base_uri' => 'http://10.0.95.95/OnyxShopMarket/Service.svc/'
+            'base_uri' => getenv('API_URL')
         ]);
 
         $response = $onyxClient->request(
@@ -23,9 +23,9 @@ trait CategoriesTrait
             [
                 'query' => [
                     'type'           => 'ORACLE',
-                    'year'           => 2016,
-                    'activityNumber' => 70,
-                    'languageID'     => 1,
+                    'year'           => getenv('ACCOUNTING_YEAR'),
+                    'activityNumber' => getenv('ACTIVITY_NUMBER'),
+                    'languageID'     => getenv('LANGUAGE_ID'),
                     'searchValue'    => -1,
                     'pageNumber'     => -1,
                     'rowsCount'      => -1,
@@ -155,7 +155,7 @@ trait CategoriesTrait
         // else create
         $catalogCategory = ObjectManager::getInstance()->create('Magento\Catalog\Model\Category');
 
-        $parentCategory = $objectManager->get('Magento\Catalog\Model\Category')->load($parentId);
+        $parentCategory = ObjectManager::getInstance()->create('Magento\Catalog\Model\Category')->load($parentId);
 
         $catalogCategory->setName($category->Name);
         $catalogCategory->setParentId($parentId);
