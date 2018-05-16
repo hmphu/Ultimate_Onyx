@@ -13,6 +13,7 @@ trait ProductsTrait
 {
     public function getOnyxProducts()
     {
+        // validate last /
         $onyxClient = new Client([
             // 'base_uri' => 'http://196.218.192.248:2000/OnyxShopMarket/Service.svc/'
             'base_uri' => 'http://10.0.95.95/OnyxShopMarket/Service.svc/'

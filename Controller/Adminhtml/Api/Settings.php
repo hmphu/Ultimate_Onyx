@@ -10,11 +10,12 @@ use Magento\Store\Model\StoreManagerInterface;
 use Ultimate\Onyx\Api\CategoriesTrait;
 use Ultimate\Onyx\Api\OrdersTrait;
 use Ultimate\Onyx\Api\ProductsTrait;
+use Ultimate\Onyx\Api\SettingsTrait;
 use Ultimate\Onyx\Log\Logger;
 
 class Settings extends Action
 {
-    use CategoriesTrait, ProductsTrait, OrdersTrait;
+    use SettingsTrait, CategoriesTrait, ProductsTrait, OrdersTrait;
 
     protected $page;
     protected $storeManagerInterface;
@@ -35,12 +36,6 @@ class Settings extends Action
 
     public function execute()
     {
-        echo json_encode($this->getStoreOrders());
-        exit;
-        // return $this->getOnyxProducts();
-        // return $this->getOnyxCategories();
-        // return $this->getStoreCategories();
-        // return $this->getStoreCategory(38);
         $revert = $this->getRequest()->getParam('revert');
 
         if ($revert) {
@@ -72,6 +67,7 @@ class Settings extends Action
         $this->logger->info('Onyx ERP Synchronization started.');
         $this->syncCategories($this->logger);
         $this->syncProducts($this->logger);
+        // sync orders
         $this->logger->info('Onyx ERP Synchronization ended.');
 
         $this->messageManager->addSuccessMessage('Onyx ERP synchronization has finished successfully!');
