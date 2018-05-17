@@ -21,7 +21,7 @@ class Settings extends Template
 
     public function getFormAction()
     {
-        return 'onyx/api/settings';
+        return '';
     }
 
     public function getFormKey()

@@ -36,6 +36,9 @@ class Settings extends Action
 
     public function execute()
     {
+        // echo json_encode();
+        // exit;
+
         $this->loadSettings();
 
         if ($this->getRequest()->getParam('revert')) {
