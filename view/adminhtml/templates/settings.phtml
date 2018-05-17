@@ -3,8 +3,7 @@
  * @var Ultimate/Onyx/Block/Settings $block
  */
  ?>
-<?php echo $this->helper('Magento\Backend\Helper\Data')->getAreaFrontName() ?>
-<form class="form" action="<?php echo $this->helper('Magento\Backend\Helper\Data')->getUrl() . 'onyx/api/settings' ?>" method="POST" onsubmit="return confirm('Are you sure to update Onyx ERP settings?');">
+<form class="form" action="<?php echo $block->getFormAction() ?>" method="POST" onsubmit="return confirm('Are you sure to update Onyx ERP settings?');">
 
     <fieldset class="fieldset">
         <legend class="legend">

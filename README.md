@@ -19,6 +19,7 @@ Next, install the new module into Magento itself by running this command in Mage
 
     php bin/magento module:enable Ultimate_Onyx
     php bin/magento setup:upgrade
+    php bin/magento setup:di:compile
 
 Check whether the module is succesfully installed in **Admin > Stores >
 Configuration > Advanced > Advanced**.

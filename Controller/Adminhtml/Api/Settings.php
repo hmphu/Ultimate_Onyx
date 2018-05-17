@@ -4,6 +4,7 @@ namespace Ultimate\Onyx\Controller\Adminhtml\Api;
 
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
+use Magento\Backend\Helper\Data;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\View\Result\PageFactory;
 use Magento\Store\Model\StoreManagerInterface;
@@ -20,25 +21,25 @@ class Settings extends Action
     protected $page;
     protected $storeManagerInterface;
     protected $logger;
+    protected $urlHepler;
 
     public function __construct(
         Context $context,
         PageFactory $page,
         StoreManagerInterface $storeManagerInterface,
-        Logger $logger
+        Logger $logger,
+        Data $urlHepler
         ) {
         parent::__construct($context);
 
         $this->page = $page;
         $this->storeManagerInterface = $storeManagerInterface;
         $this->logger = $logger;
+        $this->urlHepler = $urlHepler;
     }
 
     public function execute()
     {
-        // echo json_encode();
-        // exit;
-
         $this->loadSettings();
 
         if ($this->getRequest()->getParam('revert')) {
@@ -54,7 +55,7 @@ class Settings extends Action
             $this->messageManager->addSuccessMessage('Onyx ERP Settings are saved successfully!');
 
             return $this->resultFactory->create(ResultFactory::TYPE_REDIRECT)
-                                       ->setUrl('/admin/onyx/api/settings');
+                                       ->setUrl($this->urlHepler->getAreaFrontName() . '/onyx/api/settings');
         }
 
         return $this->page->create();
@@ -71,7 +72,7 @@ class Settings extends Action
         $this->messageManager->addSuccessMessage('Onyx ERP synchronization has finished successfully!');
 
         return $this->resultFactory->create(ResultFactory::TYPE_REDIRECT)
-                                   ->setUrl('/admin/onyx/api/settings');
+                                   ->setUrl($this->urlHepler->getAreaFrontName() . '/onyx/api/settings');
     }
 
     public function revert()
@@ -82,6 +83,6 @@ class Settings extends Action
         $this->messageManager->addSuccessMessage('Products and categories are reverted successfully!');
 
         return $this->resultFactory->create(ResultFactory::TYPE_REDIRECT)
-                                   ->setUrl('/admin/onyx/api/settings');
+                                   ->setUrl($this->urlHepler->getAreaFrontName() . '/onyx/api/settings');
     }
 }
