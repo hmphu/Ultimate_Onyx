@@ -36,7 +36,7 @@ trait ProductsTrait
                     'warehouseCode'      => -1,
                     'searchValue'        => -1,
                     'pageNumber'         => -1,
-                    'rowsCount'          => 10, // get it back to -1
+                    'rowsCount'          => -1,
                     'orderBy'            => -1,
                     'sortDirection'      => -1
                 ]
