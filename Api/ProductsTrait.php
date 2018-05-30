@@ -13,7 +13,7 @@ trait ProductsTrait
 {
     public function getOnyxProducts()
     {
-        // validate last /
+        // validate last
         $onyxClient = new Client([
             // 'base_uri' => 'http://196.218.192.248:2000/OnyxShopMarket/Service.svc/'
             'base_uri' => getenv('API_URL')
@@ -94,7 +94,7 @@ trait ProductsTrait
                     $storeProduct->setPrice($product->Price);
 
                     $storeProduct->setStockData([
-                        'is_in_stock' => $qtyToSync > 0 ? true : false, // qty with reserved ?
+                        'is_in_stock' => $qtyToSync > 0 ? true : false,
                         'qty'         => $qtyToSync
                     ]);
 
@@ -103,11 +103,11 @@ trait ProductsTrait
 
                         $newQty = ObjectManager::getInstance()->get('Magento\CatalogInventory\Api\StockStateInterface')
                                                               ->getStockQty($storeProduct->getId());
-                        $logger->info(
-                            'Item with sku `' . $storeProduct->getSku() . '` has been updated, ' .
-                            'Price -> from: ' . $oldPrice . ' to: ' . $storeProduct->getPrice() .
-                            ', Qty -> from: ' . $oldQty . ' to: ' . $newQty
-                        );
+                        // $logger->info(
+                        //     'Item with sku `' . $storeProduct->getSku() . '` has been updated, ' .
+                        //     'Price -> from: ' . $oldPrice . ' to: ' . $storeProduct->getPrice() .
+                        //     ', Qty -> from: ' . $oldQty . ' to: ' . $newQty
+                        // );
                     } catch (\Exception $e) {
                         $logger->error($e->getMessage());
                     }
