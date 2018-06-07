@@ -9,6 +9,7 @@ use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\View\Result\PageFactory;
 use Magento\Store\Model\StoreManagerInterface;
 use Ultimate\Onyx\Api\CategoriesTrait;
+use Ultimate\Onyx\Api\CustomersTrait;
 use Ultimate\Onyx\Api\OrdersTrait;
 use Ultimate\Onyx\Api\ProductsTrait;
 use Ultimate\Onyx\Api\SettingsTrait;
@@ -16,7 +17,7 @@ use Ultimate\Onyx\Log\Logger;
 
 class Settings extends Action
 {
-    use SettingsTrait, CategoriesTrait, ProductsTrait, OrdersTrait;
+    use SettingsTrait, CategoriesTrait, ProductsTrait, OrdersTrait, CustomersTrait;
 
     protected $page;
     protected $storeManagerInterface;
@@ -29,7 +30,7 @@ class Settings extends Action
         StoreManagerInterface $storeManagerInterface,
         Logger $logger,
         Data $urlHepler
-        ) {
+    ) {
         parent::__construct($context);
 
         $this->page = $page;
@@ -64,9 +65,10 @@ class Settings extends Action
     public function syncNow()
     {
         $this->logger->info('Onyx ERP Synchronization started.');
+
         $this->syncCategories($this->logger);
         $this->syncProducts($this->logger);
-        // sync orders
+
         $this->logger->info('Onyx ERP Synchronization ended.');
 
         $this->messageManager->addSuccessMessage('Onyx ERP synchronization has finished successfully!');

@@ -104,7 +104,7 @@ trait ProductsTrait
                         $newQty = ObjectManager::getInstance()->get('Magento\CatalogInventory\Api\StockStateInterface')
                                                               ->getStockQty($storeProduct->getId());
                         // $logger->info(
-                        //     'Item with sku `' . $storeProduct->getSku() . '` has been updated, ' .
+                        //     'Item with sku: `' . $storeProduct->getSku() . '` has been updated, ' .
                         //     'Price -> from: ' . $oldPrice . ' to: ' . $storeProduct->getPrice() .
                         //     ', Qty -> from: ' . $oldQty . ' to: ' . $newQty
                         // );

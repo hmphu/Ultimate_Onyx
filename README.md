@@ -6,8 +6,8 @@
 
 ### Requirements
 
-- Magento 2.2.0 Stable or higher
-- Enable Single store mode from Magento admin panel
+- Magento 2.2.* Stable
+- Enable Single store mode from Magento admin panel or you will have to manually assign products to stores.
 
 ### Setup
 
@@ -24,10 +24,10 @@ Next, install the new module into Magento itself by running this command in Mage
 Check whether the module is succesfully installed in **Admin > Stores >
 Configuration > Advanced > Advanced**.
 
-> Make sure that you have installed Magento cron jobs by this command `php bin/magento cron:install` if not so please run this command as it's critical for synchronization.
+> Make sure that you have installed Magento cron jobs by this command `php bin/magento cron:install` if not so please run this command as it's critical for synchronization. If this command returns any errors, please refer to https://devdocs.magento.com/guides/v2.2/config-guide/cli/config-cli-subcommands-cron.html
 
 ### Overview
 
-This module syncs your Magento store with Onyx ERP, modules like Categories, Products and Orders are being synced typically every one hour.
+This module syncs your Magento store with Onyx ERP, modules like Categories, Products, Customers and Orders are being synced typically every one hour.
 
 ### Usage

@@ -15,17 +15,16 @@ trait OrdersTrait
         $orders = ObjectManager::getInstance()->get('Magento\Sales\Model\OrderFactory')
                                               ->create()
                                               ->getCollection()
-                                              ->addFieldToSelect(['*']); //->getData();
+                                              ->addFieldToSelect(['*']);
 
         // return $orders;
         return $orders->getFirstItem()->getShippingAddress()->getData();
     }
 
-    public function sendOrder($order, $logger)
+    public function createNewOrder($order, $logger)
     {
         // set if customer exits
         $onyxClient = new Client([
-            // 'base_uri' => 'http://196.218.192.248:2000/OnyxShopMarket/Service.svc/'
             'base_uri' => getenv('API_URL')
         ]);
 
@@ -46,9 +45,9 @@ trait OrdersTrait
                             'OrderNo'         => -1,
                             'OrderSer'        => -1,
                             'Code'            => '', // $order->getId() . '-' . $order->getCustomerId(),
-                            'Name'            => 'me',// $name,
+                            'Name'            => $name,
                             'CustomerType'    => 4, // Credit payment
-                            'FiscalYear'      => date('Y'), // date
+                            'FiscalYear'      => date('Y'),
                             'Activity'        => getenv('ACTIVITY_NUMBER'),
                             'BranchNumber'    => getenv('BRANCH_NUMBER'),
                             'WarehouseCode'   => getenv('WAREHOUSE_CODE'),
@@ -56,7 +55,7 @@ trait OrdersTrait
                             'TotalDiscount'   => $order->getDiscountAmount(),
                             'TotalTax'        => $order->getTaxAmount(),
                             'ChargeAmt'       => $order->getShippingAmount(),
-                            'CustomerAddress' => 'adsasd',// $address,
+                            'CustomerAddress' => $address,
                             'Mobile'          => $order->getBillingAddress()->getTelephone(),
                             'Latitude'        => '',
                             'Longitude'       => '',
@@ -68,11 +67,17 @@ trait OrdersTrait
                     ]
                 ]
             );
+
+            $result = json_decode($response->getBody(), true);
+
+            if ($result['_Result']['_ErrStatuse']) {
+                $logger->info('Order with ID: ' . $order->getRealOrderId() . ' has been created.');
+                $logger->info('Onyx OrderNo: ' . $result['SingleObjectHeader']['OrderNo'] . ', '
+                            . 'Onyx OrderSer: ' . $result['SingleObjectHeader']['OrderSer']);
+            }
         } catch (\Exception $e) {
             $logger->error($e->getMessage());
         }
-
-        $logger->info($response->getBody());
     }
 
     public function getOrderedItems($items)

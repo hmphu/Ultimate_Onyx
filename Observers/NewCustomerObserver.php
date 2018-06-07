@@ -4,13 +4,13 @@ namespace Ultimate\Onyx\Observers;
 
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
-use Ultimate\Onyx\Api\OrdersTrait;
+use Ultimate\Onyx\Api\CustomersTrait;
 use Ultimate\Onyx\Api\SettingsTrait;
 use Ultimate\Onyx\Log\Logger;
 
-class NewOrderObserver implements ObserverInterface
+class NewCustomerObserver implements ObserverInterface
 {
-    use SettingsTrait, OrdersTrait;
+    use SettingsTrait, CustomersTrait;
 
     protected $connector;
     protected $logger;
@@ -23,8 +23,6 @@ class NewOrderObserver implements ObserverInterface
 
     public function execute(Observer $observer)
     {
-        $order = $observer->getEvent()->getOrder();
-
-        $this->createNewOrder($order, $this->logger);
+        $this->createNewCustomer($observer->getEvent()->getCustomer(), $this->logger);
     }
 }

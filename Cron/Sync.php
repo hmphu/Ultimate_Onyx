@@ -17,17 +17,15 @@ class Sync
     public function __construct(Logger $logger)
     {
         $this->logger = $logger;
+        $this->loadSettings();
     }
 
     public function execute()
     {
-        $this->loadSettings();
-
         $this->logger->info('Onyx ERP Synchronization started.');
 
         $this->syncCategories($this->logger);
         $this->syncProducts($this->logger);
-        // sync orders
 
         $this->logger->info('Onyx ERP Synchronization ended.');
     }
