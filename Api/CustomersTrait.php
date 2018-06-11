@@ -9,6 +9,11 @@ use GuzzleHttp\Client;
  */
 trait CustomersTrait
 {
+    /**
+     * Create Onyx ERP customer.
+     * @param \Magento\Model\Customer $customer
+     * @param \Ultimate\Onyx\Log\Logger $logger
+     */
     public function createNewCustomer($customer, $logger)
     {
         $onyxClient = new Client([

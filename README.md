@@ -15,6 +15,8 @@ Use composer to install this extension, install our module using the following c
 
     composer require ultimate-sa/onyx-magento2
 
+> If any errors are returned after this command, just run `composer update` immediately.
+
 Next, install the new module into Magento itself by running this command in Magento base directory:
 
     php bin/magento module:enable Ultimate_Onyx

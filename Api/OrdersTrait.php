@@ -10,6 +10,10 @@ use Magento\Framework\App\ObjectManager;
  */
 trait OrdersTrait
 {
+    /**
+     * Get Magento store orders.
+     * @return \Magento\Sales\Model\Order $orders
+     */
     public function getStoreOrders()
     {
         $orders = ObjectManager::getInstance()->get('Magento\Sales\Model\OrderFactory')
@@ -21,6 +25,11 @@ trait OrdersTrait
         return $orders->getFirstItem()->getShippingAddress()->getData();
     }
 
+    /**
+     * Create new Onyx ERP order.
+     * @param \Magento\Sales\Model\Order $order
+     * @param \Ultimate\Onyx\Log\Logger $logger
+     */
     public function createNewOrder($order, $logger)
     {
         // set if customer exits
@@ -80,6 +89,11 @@ trait OrdersTrait
         }
     }
 
+    /**
+     * Get Ordered items.
+     * @param \Magento\Sales\Model\Order $order->items
+     * @return $orderdItems
+     */
     public function getOrderedItems($items)
     {
         $orderdItems = [];

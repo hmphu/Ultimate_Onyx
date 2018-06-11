@@ -10,6 +10,10 @@ use Magento\Framework\App\ObjectManager;
  */
 trait CategoriesTrait
 {
+    /**
+     * Get Onyx ERP categories.
+     * @return $categories
+     */
     public function getOnyxCategories()
     {
         $onyxClient = new Client([
@@ -41,6 +45,10 @@ trait CategoriesTrait
         return $categories;
     }
 
+    /**
+     * Get Magento store categories.
+     * @return \Magento\Catalog\Model\Category $categories
+     */
     public function getStoreCategories()
     {
         $categories = ObjectManager::getInstance()->get('Magento\Catalog\Model\CategoryFactory')
@@ -51,6 +59,10 @@ trait CategoriesTrait
         return $categories;
     }
 
+    /**
+     * Sync Onyx ERP categories.
+     * @param \Ultimate\Onyx\Log\Logger $logger
+     */
     public function syncCategories($logger)
     {
         foreach ($this->getOnyxCategories() as $category) {
@@ -114,6 +126,11 @@ trait CategoriesTrait
         }
     }
 
+    /**
+     * Get Magento store category by url
+     * @param $url
+     * @return \Magento\Catalog\Model\Category
+     */
     public function getStoreCategoryByUrl($url)
     {
         $category = ObjectManager::getInstance()->get('Magento\Catalog\Model\CategoryFactory')
@@ -130,6 +147,13 @@ trait CategoriesTrait
         return null;
     }
 
+    /**
+     * Create Magento Store category
+     * @param $category
+     * @param $url
+     * @param \Ultimate\Onyx\Log\Logger $logger
+     * @return mixed $categoryId
+     */
     public function addStoreCategory($category, $url, $parentId, $logger)
     {
         // Code -> GroupCode -> MainGroupCode -> SubGroupCode -> AssistantGroupCode
@@ -174,6 +198,10 @@ trait CategoriesTrait
         return $catalogCategory->getId();
     }
 
+    /**
+     * Delete all Magento store categories.
+     * @param \Ultimate\Onyx\Log\Logger $logger
+     */
     public function deleteStoreCategories($logger)
     {
         $categories = ObjectManager::getInstance()->get('Magento\Catalog\Model\CategoryFactory')

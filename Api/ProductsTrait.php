@@ -11,6 +11,10 @@ use Stichoza\GoogleTranslate\TranslateClient;
  */
 trait ProductsTrait
 {
+    /**
+     * Get Onyx ERP products.
+     * @return mixed $products
+     */
     public function getOnyxProducts()
     {
         // validate last
@@ -49,6 +53,10 @@ trait ProductsTrait
         return $products;
     }
 
+    /**
+     * Get Magento store products.
+     * @return \Magento\Catalog\Model\Product $products
+     */
     public function getStoreProducts()
     {
         $products = ObjectManager::getInstance()->get('Magento\Catalog\Model\ProductFactory')
@@ -59,6 +67,11 @@ trait ProductsTrait
         return $products;
     }
 
+    /**
+     * Get Magento store product by SKU
+     * @param string $sku
+     * @return \Magento\Catalog\Model\Product
+     */
     public function getStoreProduct($sku)
     {
         $product = ObjectManager::getInstance()->get('Magento\Catalog\Model\ProductFactory')
@@ -75,6 +88,10 @@ trait ProductsTrait
         return null;
     }
 
+    /**
+     * Sync Onyx ERP products.
+     * @param \Ultimate\Onyx\Log\Logger $logger
+     */
     public function syncProducts($logger)
     {
         foreach ($this->getOnyxProducts() as $product) {
@@ -119,6 +136,11 @@ trait ProductsTrait
         }
     }
 
+    /**
+     * Create Magento store product.
+     * @param \Magento\Catalog\Model\Product $product
+     * @param \ULtimate\Onyx\Log\Logger $logger
+     */
     public function createStoreProduct($product, $logger)
     {
         // Code -> GroupCode -> MainGroupCode -> SubGroupCode -> AssistantGroupCode
@@ -163,6 +185,10 @@ trait ProductsTrait
         }
     }
 
+    /**
+     * Form Magento store product url.
+     * @param mixed $product
+     */
     public function formProductUrl($product)
     {
         $url = $product->GroupCode;
@@ -186,6 +212,10 @@ trait ProductsTrait
         return $url;
     }
 
+    /**
+     * Delete all Magento store categories.
+     * @param \Ultimate\Onyx\Log\Logger $logger
+     */
     public function deleteStoreProducts($logger)
     {
         $products = ObjectManager::getInstance()->get('Magento\Catalog\Model\ProductFactory')

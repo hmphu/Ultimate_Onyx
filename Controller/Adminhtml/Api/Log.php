@@ -23,7 +23,6 @@ class Log extends Action
 
     public function execute()
     {
-        // $this->logger->info('Hey there!');
         return $this->page->create();
     }
 }

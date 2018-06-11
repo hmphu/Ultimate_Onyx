@@ -24,6 +24,5 @@ class Log extends Template
     {
         $file = "var/log/onyx.log";
         return $file;
-        // return file_get_contents($file);
     }
 }
