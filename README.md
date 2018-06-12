@@ -4,6 +4,10 @@
 [![License](https://poser.pugx.org/ultimate-sa/onyx-magento2/license)](https://packagist.org/packages/ultimate-sa/onyx-magento2)
 [![Total Downloads](https://poser.pugx.org/ultimate-sa/onyx-magento2/downloads)](https://packagist.org/packages/ultimate-sa/onyx-magento2)
 
+## Overview
+
+This module syncs your Magento store with Onyx ERP, modules like Categories, Products, Customers and Orders are being synced typically every one hour. For more info about Onyx ERP please visit: http://www.ultimate-sa.com/products.php?id=2
+
 ### Requirements
 
 - Magento 2.2.* Stable
@@ -28,8 +32,8 @@ Configuration > Advanced > Advanced**.
 
 > Make sure that you have installed Magento cron jobs by this command `php bin/magento cron:install` if not so please run this command as it's critical for synchronization. If this command returns any errors, please refer to https://devdocs.magento.com/guides/v2.2/config-guide/cli/config-cli-subcommands-cron.html
 
-### Overview
-
-This module syncs your Magento store with Onyx ERP, modules like Categories, Products, Customers and Orders are being synced typically every one hour.
-
 ### Usage
+
+1. First: Set your API settings in Admin > System > Onyx ERP > API Settings.
+2. Second: Test API by clicking Sync Now button.
+3. Finally: Watch all changes done by the module in Admin > System > Onyx ERP > Sync Log.

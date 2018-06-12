@@ -20,8 +20,6 @@ trait CustomersTrait
             'base_uri' => getenv('API_URL')
         ]);
 
-        // $address = $customer->getShippingAddress()->getStreet()[0] . ', ' . $customer->getShippingAddress()->getCity();
-
         $name = $customer->getFirstName() . ' ' . $customer->getLastName();
 
         try {
@@ -53,6 +51,65 @@ trait CustomersTrait
             if ($result['_Result']['_ErrStatuse']) {
                 $logger->info('Customer: ' . $name . ' has been created.');
             }
+        } catch (\Exception $e) {
+            $logger->error($e->getMessage());
+        }
+    }
+
+    public function getCities($logger)
+    {
+        $onyxClient = new Client([
+            'base_uri' => getenv('API_URL')
+        ]);
+
+        try {
+            $response = $onyxClient->request(
+                'GET',
+                'GetCountriesList',
+                [
+                    'query' => [
+                        'type'               => 'ORACLE',
+                        'year'               => getenv('ACCOUNTING_YEAR'),
+                        'activityNumber'     => getenv('ACTIVITY_NUMBER'),
+                        'languageID'         => getenv('LANGUAGE_ID'),
+                        'searchValue'        => -1,
+                        'pageNumber'         => -1,
+                        'rowsCount'          => -1,
+                        'orderBy'            => -1,
+                        'sortDirection'      => -1
+                    ]
+                ]
+            );
+        } catch (\Exception $e) {
+            $logger->error($e->getMessage());
+        }
+    }
+
+    public function getCountries($logger)
+    {
+        $onyxClient = new Client([
+            'base_uri' => getenv('API_URL')
+        ]);
+
+        try {
+            $response = $onyxClient->request(
+                'GET',
+                'GetCitiesList',
+                [
+                    'query' => [
+                        'type'           => 'ORACLE',
+                        'year'           => getenv('ACCOUNTING_YEAR'),
+                        'activityNumber' => getenv('ACTIVITY_NUMBER'),
+                        'languageID'     => getenv('LANGUAGE_ID'),
+                        'searchValue'    => -1,
+                        'pageNumber'     => -1,
+                        'rowsCount'      => -1,
+                        'orderBy'        => -1,
+                        'sortDirection'  => -1,
+                        'countryID'      => 1 // here
+                    ]
+                ]
+            );
         } catch (\Exception $e) {
             $logger->error($e->getMessage());
         }

@@ -41,6 +41,25 @@ class Settings extends Action
 
     public function execute()
     {
+        // $key = 'AIzaSyBwpWAYyjqMD3Ckhlp9i29CZJ9UK65_oPs';
+        // $address = 'Dallas';
+        // $coordinates = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?key=' . $key . '&address=' .
+        //                 urlencode($address) . '&sensor=true');
+        // $coordinates = json_decode($coordinates, true);
+
+        // if ($coordinates['status'] == 'OK') {
+        //     echo $coordinates;
+        //     exit;
+        //     $latitude = $coordinates['results'][0]['geometry']['location']['lat'];
+        //     $longitude = $coordinates['results'][0]['geometry']['location']['lng'];
+        // }
+
+        // echo json_encode([
+        //     'longitude' => $longitude,
+        //     'latitude' => $latitude
+        // ]);
+        // exit;
+
         $this->loadSettings();
 
         if ($this->getRequest()->getParam('revert')) {
