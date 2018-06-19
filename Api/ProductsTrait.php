@@ -17,11 +17,7 @@ trait ProductsTrait
      */
     public function getOnyxProducts()
     {
-        // validate last
-        $onyxClient = new Client([
-            // 'base_uri' => 'http://196.218.192.248:2000/OnyxShopMarket/Service.svc/'
-            'base_uri' => getenv('API_URL')
-        ]);
+        $onyxClient = new Client(['base_uri' => getenv('API_URL')]);
 
         $response = $onyxClient->request(
             'GET',
@@ -49,7 +45,6 @@ trait ProductsTrait
 
         $products = json_decode($response->getBody())->MultipleObjectHeader;
 
-        // echo json_encode($products);
         return $products;
     }
 
@@ -221,7 +216,6 @@ trait ProductsTrait
         $products = ObjectManager::getInstance()->get('Magento\Catalog\Model\ProductFactory')
                                                   ->create()
                                                   ->getCollection();
-        // $objectManager->get('Magento\Framework\Registry')->register('isSecureArea', true);
 
         foreach ($products as $product) {
             if ($product->getId() <= 2) {

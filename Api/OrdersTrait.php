@@ -32,10 +32,7 @@ trait OrdersTrait
      */
     public function createNewOrder($order, $logger)
     {
-        // set if customer exits
-        $onyxClient = new Client([
-            'base_uri' => getenv('API_URL')
-        ]);
+        $onyxClient = new Client(['base_uri' => getenv('API_URL')]);
 
         $address = $order->getShippingAddress()->getStreet()[0] . ', ' . $order->getShippingAddress()->getCity();
 

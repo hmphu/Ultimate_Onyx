@@ -3,5 +3,7 @@
     <extension_attributes for="Magento\Customer\Api\Data\CustomerInterface">
         <attribute code="onyx_phone" type="string"/>
         <attribute code="onyx_address" type="string"/>
+        <attribute code="onyx_country" type="string"/>
+        <attribute code="onyx_city" type="string"/>
     </extension_attributes>
 </config>

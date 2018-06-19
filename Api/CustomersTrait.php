@@ -16,9 +16,7 @@ trait CustomersTrait
      */
     public function createNewCustomer($customer, $logger)
     {
-        $onyxClient = new Client([
-            'base_uri' => getenv('API_URL')
-        ]);
+        $onyxClient = new Client(['base_uri' => getenv('API_URL')]);
 
         $name = $customer->getFirstName() . ' ' . $customer->getLastName();
 
@@ -56,11 +54,13 @@ trait CustomersTrait
         }
     }
 
-    public function getCities($logger)
+    /**
+     * Get Onyx ERP countries list
+     * @return array $countries
+     */
+    public function getOnyxCountries()
     {
-        $onyxClient = new Client([
-            'base_uri' => getenv('API_URL')
-        ]);
+        $onyxClient = new Client(['base_uri' => getenv('API_URL')]);
 
         try {
             $response = $onyxClient->request(
@@ -80,38 +80,58 @@ trait CustomersTrait
                     ]
                 ]
             );
+
+            $countries = json_decode($response->getBody(), true);
+
+            return $countries;
         } catch (\Exception $e) {
-            $logger->error($e->getMessage());
         }
     }
 
-    public function getCountries($logger)
+    /**
+     * Get Onyx ERP cities list
+     * @return array $cities
+     */
+    public function getOnyxCities()
     {
-        $onyxClient = new Client([
-            'base_uri' => getenv('API_URL')
-        ]);
+        $cities = [];
+        $countries = $this->getOnyxCountries()['MultipleObjectHeader'];
 
-        try {
-            $response = $onyxClient->request(
-                'GET',
-                'GetCitiesList',
-                [
-                    'query' => [
-                        'type'           => 'ORACLE',
-                        'year'           => getenv('ACCOUNTING_YEAR'),
-                        'activityNumber' => getenv('ACTIVITY_NUMBER'),
-                        'languageID'     => getenv('LANGUAGE_ID'),
-                        'searchValue'    => -1,
-                        'pageNumber'     => -1,
-                        'rowsCount'      => -1,
-                        'orderBy'        => -1,
-                        'sortDirection'  => -1,
-                        'countryID'      => 1 // here
+        $onyxClient = new Client(['base_uri' => getenv('API_URL')]);
+
+        foreach ($countries as $country) {
+            try {
+                $response = $onyxClient->request(
+                    'GET',
+                    'GetCitiesList',
+                    [
+                        'query' => [
+                            'type'           => 'ORACLE',
+                            'year'           => getenv('ACCOUNTING_YEAR'),
+                            'activityNumber' => getenv('ACTIVITY_NUMBER'),
+                            'languageID'     => getenv('LANGUAGE_ID'),
+                            'searchValue'    => -1,
+                            'pageNumber'     => -1,
+                            'rowsCount'      => -1,
+                            'orderBy'        => -1,
+                            'sortDirection'  => -1,
+                            'countryID'      => $country['Code']
+                        ]
                     ]
-                ]
-            );
-        } catch (\Exception $e) {
-            $logger->error($e->getMessage());
+                );
+
+                $onyxCities = json_decode($response->getBody(), true);
+
+                foreach ($onyxCities['MultipleObjectHeader'] as $city) {
+                    $cities [] = [
+                        'value' => $city['Code'],
+                        'label' => $city['Name']
+                    ];
+                }
+            } catch (\Exception $e) {
+            }
         }
+
+        return $cities;
     }
 }

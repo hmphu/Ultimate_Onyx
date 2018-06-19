@@ -1,0 +1,36 @@
+<?php
+/**
+ * @var Ultimate/Onyx/Block/Register $block
+ */
+?>
+<fieldset class="fieldset create account" data-hasrequired="<?php /* @escapeNotVerified */ echo __('* Required Fields') ?>">
+    <legend class="legend"><span><?php /* @escapeNotVerified */ echo __('Contact Information') ?></span></legend>
+    <div class="field regulation">
+        <label for="regulation" class="label">
+            <span><?php /* @escapeNotVerified */ echo __('Phone') ?></span>
+        </label>
+        <div class="control">
+            <input type="text" name="onyx_phone" id="onyx_phone" title="<?php /* @escapeNotVerified */ echo __('Phone') ?>" class="input-text" data-validate="{required:true}">
+        </div>
+    </div>
+    <div class="field regulation">
+        <label for="regulation" class="label">
+            <span><?php /* @escapeNotVerified */ echo __('Address') ?></span>
+        </label>
+        <div class="control">
+            <input type="text" name="onyx_address" id="onyx_address" title="<?php /* @escapeNotVerified */ echo __('Address') ?>" class="input-text" data-validate="{required:true}">
+        </div>
+    </div>
+    <div class="field regulation">
+        <label for="regulation" class="label">
+            <span><?php /* @escapeNotVerified */ echo __('Country') ?></span>
+        </label>
+        <?php echo $block->getCountries() ?>
+    </div>
+    <div class="field regulation">
+        <label for="regulation" class="label">
+            <span><?php /* @escapeNotVerified */ echo __('City') ?></span>
+        </label>
+        <?php echo $block->getCities()?>
+    </div>
+</fieldset>

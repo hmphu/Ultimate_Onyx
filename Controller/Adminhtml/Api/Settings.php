@@ -41,6 +41,8 @@ class Settings extends Action
 
     public function execute()
     {
+        $this->loadSettings();
+
         // $key = 'AIzaSyBwpWAYyjqMD3Ckhlp9i29CZJ9UK65_oPs';
         // $address = 'Dallas';
         // $coordinates = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?key=' . $key . '&address=' .
@@ -59,8 +61,6 @@ class Settings extends Action
         //     'latitude' => $latitude
         // ]);
         // exit;
-
-        $this->loadSettings();
 
         if ($this->getRequest()->getParam('revert')) {
             return $this->revert();
