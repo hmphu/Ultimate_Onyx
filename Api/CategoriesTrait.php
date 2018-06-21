@@ -12,6 +12,7 @@ trait CategoriesTrait
 {
     /**
      * Get Onyx ERP categories.
+     *
      * @return $categories
      */
     public function getOnyxCategories()
@@ -47,6 +48,7 @@ trait CategoriesTrait
 
     /**
      * Get Magento store categories.
+     *
      * @return \Magento\Catalog\Model\Category $categories
      */
     public function getStoreCategories()
@@ -61,6 +63,7 @@ trait CategoriesTrait
 
     /**
      * Sync Onyx ERP categories.
+     *
      * @param \Ultimate\Onyx\Log\Logger $logger
      */
     public function syncCategories($logger)
@@ -128,8 +131,9 @@ trait CategoriesTrait
 
     /**
      * Get Magento store category by url
-     * @param $url
-     * @return \Magento\Catalog\Model\Category
+     *
+     * @param string $url
+     * @return \Magento\Catalog\Model\Category $category
      */
     public function getStoreCategoryByUrl($url)
     {
@@ -148,11 +152,12 @@ trait CategoriesTrait
     }
 
     /**
-     * Create Magento Store category
+     * Create Magento Store category.
+     *
      * @param $category
-     * @param $url
+     * @param string $url
      * @param \Ultimate\Onyx\Log\Logger $logger
-     * @return mixed $categoryId
+     * @return integer $categoryId
      */
     public function addStoreCategory($category, $url, $parentId, $logger)
     {
@@ -200,6 +205,7 @@ trait CategoriesTrait
 
     /**
      * Delete all Magento store categories.
+     *
      * @param \Ultimate\Onyx\Log\Logger $logger
      */
     public function deleteStoreCategories($logger)

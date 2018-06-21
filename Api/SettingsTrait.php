@@ -9,12 +9,20 @@ use Dotenv\Dotenv;
  */
 trait SettingsTrait
 {
+    /**
+     * Load API settings.
+     */
     public function loadSettings()
     {
         $dotenv = new Dotenv(__DIR__);
         $dotenv->load();
     }
 
+    /**
+     * Update API settings.
+     *
+     * @param array $settings
+     */
     public function updateSettings($settings = [])
     {
         $this->loadSettings();
@@ -30,6 +38,12 @@ trait SettingsTrait
         $this->setEnv('LANGUAGE_ID', $settings['language_id']);
     }
 
+    /**
+     * Update API config.
+     *
+     * @param string $key
+     * @param string $value
+     */
     public function setEnv($key, $value)
     {
         $file = __DIR__ . '/.env';
@@ -44,6 +58,11 @@ trait SettingsTrait
         fclose($fp);
     }
 
+    /**
+     * Form url.
+     *
+     * @param string $url
+     */
     public function formUrl($url)
     {
         if (substr($url, -1) == '/') {

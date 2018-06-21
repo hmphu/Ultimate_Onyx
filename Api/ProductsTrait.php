@@ -13,6 +13,7 @@ trait ProductsTrait
 {
     /**
      * Get Onyx ERP products.
+     *
      * @return mixed $products
      */
     public function getOnyxProducts()
@@ -50,6 +51,7 @@ trait ProductsTrait
 
     /**
      * Get Magento store products.
+     *
      * @return \Magento\Catalog\Model\Product $products
      */
     public function getStoreProducts()
@@ -63,7 +65,8 @@ trait ProductsTrait
     }
 
     /**
-     * Get Magento store product by SKU
+     * Get Magento store product by SKU.
+     *
      * @param string $sku
      * @return \Magento\Catalog\Model\Product
      */
@@ -85,6 +88,7 @@ trait ProductsTrait
 
     /**
      * Sync Onyx ERP products.
+     *
      * @param \Ultimate\Onyx\Log\Logger $logger
      */
     public function syncProducts($logger)
@@ -115,17 +119,16 @@ trait ProductsTrait
 
                         $newQty = ObjectManager::getInstance()->get('Magento\CatalogInventory\Api\StockStateInterface')
                                                               ->getStockQty($storeProduct->getId());
-                        // $logger->info(
-                        //     'Item with sku: `' . $storeProduct->getSku() . '` has been updated, ' .
-                        //     'Price -> from: ' . $oldPrice . ' to: ' . $storeProduct->getPrice() .
-                        //     ', Qty -> from: ' . $oldQty . ' to: ' . $newQty
-                        // );
+                        $logger->info(
+                            'Item with sku: `' . $storeProduct->getSku() . '` has been updated, ' .
+                            '-Price- from: ' . $oldPrice . ' to: ' . $storeProduct->getPrice() .
+                            ', -Qty- from: ' . $oldQty . ' to: ' . $newQty
+                        );
                     } catch (\Exception $e) {
                         $logger->error($e->getMessage());
                     }
                 }
             } else {
-                // else create
                 $this->createStoreProduct($product, $logger);
             }
         }
@@ -133,6 +136,7 @@ trait ProductsTrait
 
     /**
      * Create Magento store product.
+     *
      * @param \Magento\Catalog\Model\Product $product
      * @param \ULtimate\Onyx\Log\Logger $logger
      */
@@ -159,7 +163,7 @@ trait ProductsTrait
 
         $catalogProduct->setStockData([
             'is_in_stock' => $product->AvailableQuantity > 0 ? true : false,
-            'qty'         => $product->AvailableQuantity // qty with reserved?
+            'qty'         => $product->AvailableQuantity
         ]);
 
         $catalogProduct->setUrlKey(
@@ -182,6 +186,7 @@ trait ProductsTrait
 
     /**
      * Form Magento store product url.
+     *
      * @param mixed $product
      */
     public function formProductUrl($product)
@@ -209,6 +214,7 @@ trait ProductsTrait
 
     /**
      * Delete all Magento store categories.
+     *
      * @param \Ultimate\Onyx\Log\Logger $logger
      */
     public function deleteStoreProducts($logger)

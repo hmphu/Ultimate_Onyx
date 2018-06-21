@@ -3,6 +3,7 @@
 namespace Ultimate\Onyx\Api;
 
 use GuzzleHttp\Client;
+use Magento\Framework\App\ObjectManager;
 
 /**
  * Customers ERP management.
@@ -11,14 +12,13 @@ trait CustomersTrait
 {
     /**
      * Create Onyx ERP customer.
-     * @param \Magento\Model\Customer $customer
+     *
+     * @param \Magento\Customer\Model\Customer $customer
      * @param \Ultimate\Onyx\Log\Logger $logger
      */
     public function createNewCustomer($customer, $logger)
     {
         $onyxClient = new Client(['base_uri' => getenv('API_URL')]);
-
-        $name = $customer->getFirstName() . ' ' . $customer->getLastName();
 
         try {
             $response = $onyxClient->request(
@@ -31,14 +31,14 @@ trait CustomersTrait
                         'activityNumber' => getenv('ACTIVITY_NUMBER'),
                         'value' => [
                             'ActivityType' => getenv('ACTIVITY_NUMBER'),
-                            'CompanyName'  => $name,
+                            'CompanyName'  => $customer->getName(),
                             'Email'        => $customer->getEmail(),
-                            'Mobile'       => random_int(1111111111, 9999999999), // $customer->getBillingAddress()->getTelephone(),
-                            'Name'         => $name,
-                            'Password'     => $name,
-                            'CountryCode'  => 1,
-                            'CityCode'     => 1,
-                            'Address'      => 'address' // $address
+                            'Mobile'       => $customer->getData('onyx_phone'),
+                            'Name'         => $customer->getName(),
+                            'Password'     => $customer->getName(),
+                            'CountryCode'  => $customer->getData('onyx_country'),
+                            'CityCode'     => $customer->getData('onyx_city'),
+                            'Address'      => $customer->getData('onyx_address')
                         ]
                     ]
                 ]
@@ -47,7 +47,7 @@ trait CustomersTrait
             $result = json_decode($response->getBody(), true);
 
             if ($result['_Result']['_ErrStatuse']) {
-                $logger->info('Customer: ' . $name . ' has been created.');
+                $logger->info('Customer with name: ' . $customer->getName() . ' has been created.');
             }
         } catch (\Exception $e) {
             $logger->error($e->getMessage());
@@ -56,6 +56,7 @@ trait CustomersTrait
 
     /**
      * Get Onyx ERP countries list
+     *
      * @return array $countries
      */
     public function getOnyxCountries()
@@ -90,6 +91,7 @@ trait CustomersTrait
 
     /**
      * Get Onyx ERP cities list
+     *
      * @return array $cities
      */
     public function getOnyxCities()
@@ -133,5 +135,23 @@ trait CustomersTrait
         }
 
         return $cities;
+    }
+
+    /**
+     * Get Store customer by id
+     *
+     * @param integer $id
+     * @return Customer $customer
+     */
+    public function getStoreCustomer($id)
+    {
+        $customer = ObjectManager::getInstance()->get('Magento\Customer\Model\Customer')
+                                               ->load($id);
+
+        if ($customer->getId()) {
+            return $customer;
+        }
+
+        return null;
     }
 }

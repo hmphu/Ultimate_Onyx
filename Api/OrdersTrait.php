@@ -12,6 +12,7 @@ trait OrdersTrait
 {
     /**
      * Get Magento store orders.
+     *
      * @return \Magento\Sales\Model\Order $orders
      */
     public function getStoreOrders()
@@ -27,6 +28,7 @@ trait OrdersTrait
 
     /**
      * Create new Onyx ERP order.
+     *
      * @param \Magento\Sales\Model\Order $order
      * @param \Ultimate\Onyx\Log\Logger $logger
      */
@@ -36,7 +38,17 @@ trait OrdersTrait
 
         $address = $order->getShippingAddress()->getStreet()[0] . ', ' . $order->getShippingAddress()->getCity();
 
-        $name = $order->getBillingAddress()->getFirstName() . ' ' . $order->getBillingAddress()->getLastName();
+        $key = 'AIzaSyBwpWAYyjqMD3Ckhlp9i29CZJ9UK65_oPs';
+        $coordinates = file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?key=' . $key . '&address=' .
+                        urlencode($address) . '&sensor=true');
+        $coordinates = json_decode($coordinates, true);
+
+        if ($coordinates['status'] == 'OK') {
+            $latitude = $coordinates['results'][0]['geometry']['location']['lat'];
+            $longitude = $coordinates['results'][0]['geometry']['location']['lng'];
+        } else {
+            $longitude = $latitude = '';
+        }
 
         try {
             $response = $onyxClient->request(
@@ -51,7 +63,7 @@ trait OrdersTrait
                             'OrderNo'         => -1,
                             'OrderSer'        => -1,
                             'Code'            => '', // $order->getId() . '-' . $order->getCustomerId(),
-                            'Name'            => $name,
+                            'Name'            => $order->getCustomerName(),
                             'CustomerType'    => 4, // Credit payment
                             'FiscalYear'      => date('Y'),
                             'Activity'        => getenv('ACTIVITY_NUMBER'),
@@ -63,8 +75,8 @@ trait OrdersTrait
                             'ChargeAmt'       => $order->getShippingAmount(),
                             'CustomerAddress' => $address,
                             'Mobile'          => $order->getBillingAddress()->getTelephone(),
-                            'Latitude'        => '',
-                            'Longitude'       => '',
+                            'Latitude'        => $latitude,
+                            'Longitude'       => $longitude,
                             'FileExtension'   => '',
                             'ImageValue'      => '',
                             'P_AD_TRMNL_NM'   => 0,
@@ -77,9 +89,13 @@ trait OrdersTrait
             $result = json_decode($response->getBody(), true);
 
             if ($result['_Result']['_ErrStatuse']) {
-                $logger->info('Order with ID: ' . $order->getRealOrderId() . ' has been created.');
-                $logger->info('Onyx OrderNo: ' . $result['SingleObjectHeader']['OrderNo'] . ', '
-                            . 'Onyx OrderSer: ' . $result['SingleObjectHeader']['OrderSer']);
+                $order->setData('onyx_order_no', $result['SingleObjectHeader']['OrderNo']);
+                $order->setData('onyx_order_ser', $result['SingleObjectHeader']['OrderSer']);
+                $order->save();
+
+                $logger->info('Order with ID: ' . $order->getRealOrderId() . ' has been created.'
+                            . ' Onyx OrderNo: ' . $result['SingleObjectHeader']['OrderNo'] .
+                            ', ' . 'Onyx OrderSer: ' . $result['SingleObjectHeader']['OrderSer']);
             }
         } catch (\Exception $e) {
             $logger->error($e->getMessage());
@@ -88,8 +104,9 @@ trait OrdersTrait
 
     /**
      * Get Ordered items.
-     * @param \Magento\Sales\Model\Order $order->items
-     * @return $orderdItems
+     *
+     * @param array $items
+     * @return array $orderdItems
      */
     public function getOrderedItems($items)
     {
