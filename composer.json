@@ -26,6 +26,11 @@
             "Ultimate\\Onyx\\": ""
         }
     },
+    "scripts": {
+        "post-root-package-install": [
+            "cd vendor/ultimate-sa/Ultimate_Onyx/Api && php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ]
+    },
     "minimum-stability": "dev",
     "prefer-stable": true
 }

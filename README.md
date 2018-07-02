@@ -6,7 +6,7 @@
 
 ## Overview
 
-This module syncs your Magento store with Onyx ERP, modules like Categories, Products, Customers and Orders are being synced typically every one hour. For more info about Onyx ERP please visit: http://www.ultimate-sa.com/products.php?id=2
+This module syncs your Magento store with Onyx ERP by Ultimate Solutions, modules like Categories, Products, Customers and Orders are being synced typically every one hour. For more info about Onyx ERP please visit: http://www.ultimate-sa.com/products.php?id=2
 
 ### Requirements
 
@@ -34,6 +34,6 @@ Configuration > Advanced > Advanced**.
 
 ### Usage
 
-1. First: Set your API settings in Admin > System > Onyx ERP > API Settings.
+1. First: Set your API settings in **Admin > System > Onyx ERP > API Settings**.
 2. Second: Test API by clicking Sync Now button.
-3. Finally: Watch all changes done by the module in Admin > System > Onyx ERP > Sync Log.
+3. Finally: Watch all changes done by the module in **Admin > System > Onyx ERP > Sync Log**.

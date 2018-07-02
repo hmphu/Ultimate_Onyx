@@ -153,6 +153,9 @@ trait ProductsTrait
         $catalogProduct->setVisibility(4);
         $catalogProduct->setTypeId('simple'); // type of product (simple/virtual/downloadable/configurable)
         $catalogProduct->setPrice($product->Price);
+        // Adding Image to product
+        $imagePath = env('ImaGES_URL') . $product->Image;
+        $catalogProduct->addImageToMediaGallery($imagePath, ['image', 'small_image', 'thumbnail'], false, false);
 
         $url = $this->formProductUrl($product);
         $category = $this->getStoreCategoryByUrl($url);
@@ -166,12 +169,19 @@ trait ProductsTrait
             'qty'         => $product->AvailableQuantity
         ]);
 
-        $catalogProduct->setUrlKey(
-            $product->Code . '-' .
-            TranslateClient::translate('ar', 'en', $product->Unit) . '-' .
-            TranslateClient::translate('ar', 'en', $product->Name) . '-' .
-            random_int(1, 9999999)
-        );
+        try {
+            $catalogProduct->setUrlKey(
+                $product->Code . '-' .
+                TranslateClient::translate('ar', 'en', $product->Unit) . '-' .
+                TranslateClient::translate('ar', 'en', $product->Name) . '-' .
+                random_int(1, 9999999)
+            );
+        } catch (\Exception $e) {
+            $catalogProduct->setUrlKey(
+                $product->Code . '-' .
+                random_int(1, 9999999)
+            );
+        }
 
         // $catalogProduct->setStoreId(1); // $this->storeManagerInterface->getStore()->getId()
         // $catalogProduct->setWebsiteIds([1]); // $this->storeManagerInterface->getStore()->getWebsiteId()
