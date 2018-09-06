@@ -2,11 +2,11 @@
 
 namespace Ultimate\Onyx\Observers;
 
-use Magento\Framework\Event\Observer;
-use Magento\Framework\Event\ObserverInterface;
+use Ultimate\Onyx\Log\Logger;
 use Ultimate\Onyx\Api\OrdersTrait;
 use Ultimate\Onyx\Api\SettingsTrait;
-use Ultimate\Onyx\Log\Logger;
+use Magento\Framework\Event\Observer;
+use Magento\Framework\Event\ObserverInterface;
 
 class NewOrderObserver implements ObserverInterface
 {

@@ -2,10 +2,10 @@
 
 namespace Ultimate\Onyx\Observers;
 
-use Magento\Framework\App\ObjectManager;
-use Magento\Framework\Event\Observer;
-use Magento\Framework\Event\ObserverInterface;
 use Ultimate\Onyx\Log\Logger;
+use Magento\Framework\Event\Observer;
+use Magento\Framework\App\ObjectManager;
+use Magento\Framework\Event\ObserverInterface;
 
 class OrderStatusObserver implements ObserverInterface
 {
