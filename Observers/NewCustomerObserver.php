@@ -23,6 +23,6 @@ class NewCustomerObserver implements ObserverInterface
 
     public function execute(Observer $observer)
     {
-        $this->createNewCustomer($observer->getEvent()->getCustomer(), $this->logger);
+        // $this->createNewCustomer($observer->getEvent()->getCustomer(), $this->logger);
     }
 }

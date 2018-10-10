@@ -48,7 +48,7 @@ class Settings extends Action
         }
 
         if ($this->getRequest()->getParam('now')) {
-            return $this->syncNow();
+            // return $this->syncNow();
         }
 
         if ($this->getRequest()->getParam('api_url')) {

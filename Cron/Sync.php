@@ -24,8 +24,8 @@ class Sync
     {
         $this->logger->info('Onyx ERP Synchronization started.');
 
-        $this->syncCategories($this->logger);
-        $this->syncProducts($this->logger);
+        // $this->syncCategories($this->logger);
+        // $this->syncProducts($this->logger);
 
         $this->logger->info('Onyx ERP Synchronization ended.');
     }
