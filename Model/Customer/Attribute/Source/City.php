@@ -13,8 +13,12 @@ class City extends Table
     public function getAllOptions()
     {
         $this->loadSettings();
-        $this->_options = $this->getOnyxCities();
+        $onyxCities = $this->getOnyxCities();
 
-        return $this->_options;
+        if ($onyxCities) {
+            $this->_options = $onyxCities;
+
+            return $this->_options;
+        }
     }
 }

@@ -86,6 +86,7 @@ trait CustomersTrait
 
             return $countries;
         } catch (\Exception $e) {
+            return false;
         }
     }
 
@@ -131,6 +132,7 @@ trait CustomersTrait
                     ];
                 }
             } catch (\Exception $e) {
+                return false;
             }
         }
 

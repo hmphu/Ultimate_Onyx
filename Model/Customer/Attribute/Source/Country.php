@@ -15,16 +15,19 @@ class Country extends Table
         $this->loadSettings();
 
         $countries = [];
+        $onyxCountries = $this->getOnyxCountries()['MultipleObjectHeader'];
 
-        foreach ($this->getOnyxCountries()['MultipleObjectHeader'] as $country) {
-            $countries [] = [
-                'value' => $country['Code'],
-                'label' => $country['Name']
-            ];
+        if ($onyxCountries) {
+            foreach ($onyxCountries as $country) {
+                $countries [] = [
+                    'value' => $country['Code'],
+                    'label' => $country['Name']
+                ];
+            }
+
+            $this->_options = $countries;
+
+            return $this->_options;
         }
-
-        $this->_options = $countries;
-
-        return $this->_options;
     }
 }
