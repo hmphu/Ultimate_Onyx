@@ -19,37 +19,37 @@ class Register extends Template
         $this->loadSettings();
     }
 
-    public function getCities()
-    {
-        $cities = $this->getOnyxCities();
-        $citiesSelect = $this->getLayout()->createBlock('Magento\Framework\View\Element\Html\Select');
+    // public function getCities()
+    // {
+    //     $cities = $this->getOnyxCities();
+    //     $citiesSelect = $this->getLayout()->createBlock('Magento\Framework\View\Element\Html\Select');
 
-        $citiesSelect->setOptions($cities)
-                    ->setName('onyx_city')
-                    ->setClass('cities-select')
-                    ->setId('cities-select');
+    //     $citiesSelect->setOptions($cities)
+    //                 ->setName('onyx_city')
+    //                 ->setClass('cities-select')
+    //                 ->setId('cities-select');
 
-        return $citiesSelect->getHtml();
-    }
+    //     return $citiesSelect->getHtml();
+    // }
 
-    public function getCountries()
-    {
-        $countries = [];
+    // public function getCountries()
+    // {
+    //     $countries = [];
 
-        foreach ($this->getOnyxCountries()['MultipleObjectHeader'] as $country) {
-            $countries [] = [
-                'value' => $country['Code'],
-                'label' => $country['Name']
-            ];
-        }
+    //     foreach ($this->getOnyxCountries()['MultipleObjectHeader'] as $country) {
+    //         $countries [] = [
+    //             'value' => $country['Code'],
+    //             'label' => $country['Name']
+    //         ];
+    //     }
 
-        $countriesSelect = $this->getLayout()->createBlock('Magento\Framework\View\Element\Html\Select');
+    //     $countriesSelect = $this->getLayout()->createBlock('Magento\Framework\View\Element\Html\Select');
 
-        $countriesSelect->setOptions($countries)
-                        ->setName('onyx_country')
-                        ->setClass('countries-select')
-                        ->setId('countries-select');
+    //     $countriesSelect->setOptions($countries)
+    //                     ->setName('onyx_country')
+    //                     ->setClass('countries-select')
+    //                     ->setId('countries-select');
 
-        return $countriesSelect->getHtml();
-    }
+    //     return $countriesSelect->getHtml();
+    // }
 }

@@ -102,41 +102,42 @@ trait CustomersTrait
 
         $onyxClient = new Client(['base_uri' => getenv('API_URL')]);
 
-        foreach ($countries as $country) {
-            try {
-                $response = $onyxClient->request(
-                    'GET',
-                    'GetCitiesList',
-                    [
-                        'query' => [
-                            'type'           => 'ORACLE',
-                            'year'           => getenv('ACCOUNTING_YEAR'),
-                            'activityNumber' => getenv('ACTIVITY_NUMBER'),
-                            'languageID'     => getenv('LANGUAGE_ID'),
-                            'searchValue'    => -1,
-                            'pageNumber'     => -1,
-                            'rowsCount'      => -1,
-                            'orderBy'        => -1,
-                            'sortDirection'  => -1,
-                            'countryID'      => $country['Code']
+        if ($countries) {
+            foreach ($countries as $country) {
+                try {
+                    $response = $onyxClient->request(
+                        'GET',
+                        'GetCitiesList',
+                        [
+                            'query' => [
+                                'type'           => 'ORACLE',
+                                'year'           => getenv('ACCOUNTING_YEAR'),
+                                'activityNumber' => getenv('ACTIVITY_NUMBER'),
+                                'languageID'     => getenv('LANGUAGE_ID'),
+                                'searchValue'    => -1,
+                                'pageNumber'     => -1,
+                                'rowsCount'      => -1,
+                                'orderBy'        => -1,
+                                'sortDirection'  => -1,
+                                'countryID'      => $country['Code']
+                            ]
                         ]
-                    ]
-                );
+                    );
 
-                $onyxCities = json_decode($response->getBody(), true);
+                    $onyxCities = json_decode($response->getBody(), true);
 
-                foreach ($onyxCities['MultipleObjectHeader'] as $city) {
-                    $cities [] = [
-                        'value' => $city['Code'],
-                        'label' => $city['Name']
-                    ];
+                    foreach ($onyxCities['MultipleObjectHeader'] as $city) {
+                        $cities [] = [
+                            'value' => $city['Code'],
+                            'label' => $city['Name']
+                        ];
+                    }
+                } catch (\Exception $e) {
+                    return false;
                 }
-            } catch (\Exception $e) {
-                return false;
             }
+            return $cities;
         }
-
-        return $cities;
     }
 
     /**
